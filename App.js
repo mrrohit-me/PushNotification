@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Button } from 'react-native'
 import * as firebase from 'firebase'
-import * as Permissions from 'expo-permissions';
 import * as Notifications from 'expo-notifications';
 
 export class App extends Component {
@@ -36,11 +35,11 @@ export class App extends Component {
 	// }
 
 	handlePermissions = async () => {
-		const { status: currentStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+		const { status: currentStatus } = await Notifications.getPermissionsAsync()
 		let finalStatus = currentStatus
 
 		if (currentStatus !== "granted") {
-			const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+			const { status } = await Notifications.requestPermissionsAsync();
 			finalStatus = status
 		}
 		if (finalStatus !== 'granted') {
